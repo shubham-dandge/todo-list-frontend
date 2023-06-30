@@ -1,6 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { List } from 'src/app/models/list.model';
+import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/task.service';
 
 @Component({
@@ -11,26 +13,35 @@ import { TaskService } from 'src/app/task.service';
 export class TaskViewComponent implements OnInit {
 
   lists : any[]=[];
-  tasks: any;
+  tasks: Task[]=[];
 
   constructor(private taskService: TaskService, private route: ActivatedRoute) { }
 
   ngOnInit(){
     this.route.params.subscribe(
       (params: Params) => {
-        if (params['listId']) {
-          this.taskService.getTasks(params['listId']).subscribe((tasks: any[]) => {
+        //if (params['listId']) {
+          this.taskService.getTasks(params['listId']).subscribe((tasks: Task[]) => {
             this.tasks = tasks;
           })
-        } else {
-          this.tasks = undefined;
-        }
+        //} 
+        // else {
+        //   this.tasks = undefined;
+        // }
       }
     )
-    this.taskService.getLists().subscribe((lists: any[]) => {;
+    this.taskService.getLists().subscribe((lists: List[]) => {;
       //this.lists = lists as any[];
       this.lists = lists;
     })
+  }
+  onTaskClick(tasks:Task){
+    //We want to set a task to complete
+    this.taskService.complete(tasks).subscribe(() =>{
+      console.log("Completed Sucessfully");
+    })
+   
+
   }
 }
 
