@@ -3,7 +3,7 @@ export class Task {
     title: any;
     _listId:any;
     
-    completed: any;
+    completed: boolean | any;
     
 
 }

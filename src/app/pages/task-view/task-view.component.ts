@@ -4,6 +4,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { List } from 'src/app/models/list.model';
 import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/task.service';
+//import { CommonModule } from '@angular/common';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-task-view',
@@ -31,15 +33,19 @@ export class TaskViewComponent implements OnInit {
         
       }
     )
-    this.taskService.getLists().subscribe((lists: List[]) => {;
-      //this.lists = lists as any[];
-      this.lists = lists;
+    // this.taskService.getLists().subscribe((lists: List[]) => {
+    //   this.lists = lists;
+    // })
+    this.taskService.getLists().subscribe((lists: Object) => {
+      this.lists = lists as any[];
+      //this.lists = lists;
     })
   }
   onTaskClick(tasks:Task){
     //We want to set a task to complete
-    this.taskService.complete(tasks).subscribe(() =>{
+    this.taskService.completed(tasks).subscribe(() =>{
       console.log("Completed Sucessfully");
+      tasks.completed =! tasks.completed;
     })
    
 

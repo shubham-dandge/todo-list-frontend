@@ -22,7 +22,7 @@ export class TaskService {
     //We want to send a web request to create a Task
     return this.webReqService.post(`lists/${listId}/tasks`,{ title});
   }
-  complete(task:Task){
+  completed(task:Task){
     return this.webReqService.patch(`lists/${task._listId}/tasks/${task._id}`,{
       complete: true
     });
